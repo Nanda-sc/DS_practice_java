@@ -7,12 +7,15 @@ public class App {
 		names.insert("Harry");
 		names.insert("Ron");
 		names.insert("John");
+		names.insert("Ann");
 		
 		names.traverse();
 		
 		names.remove("Ron");
 		
 		names.traverse();
+		
+		System.out.println(names.middleNode());
 
 	}
 
