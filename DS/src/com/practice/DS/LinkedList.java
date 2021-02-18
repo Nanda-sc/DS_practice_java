@@ -7,10 +7,11 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
 
 	@Override
 	public void insert(T data) {
+		++numOfItems;
 		if (root == null) {
 			root = new Node<>(data);
 		} else {
-			//insertBegining(data);
+			// insertBegining(data);
 			insertEnd(data, root);
 		}
 
@@ -22,14 +23,14 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
 		root = newNode;
 
 	}
-	
-	//start with root node and find the last node
+
+	// start with root node and find the last node
 	private void insertEnd(T data, Node<T> node) {
-		//recursive calls till the last node is found
-		if(node.getNextNode() != null) {
+		// recursive calls till the last node is found
+		if (node.getNextNode() != null) {
 			insertEnd(data, node.getNextNode());
-		}else {
-			//last node found
+		} else {
+			// last node found
 			Node<T> newNode = new Node<>(data);
 			node.setNextNode(newNode);
 		}
@@ -37,40 +38,42 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
 
 	@Override
 	public void remove(T data) {
-		
-		if(root == null) return;
-		
-		if(root.getData().compareTo(data)== 0) {
+
+		if (root == null)
+			return;
+
+		if (root.getData().compareTo(data) == 0) {
 			root = root.getNextNode();
-		}else {
+		} else {
 			remove(data, root, root.getNextNode());
 		}
 	}
 
 	private void remove(T data, Node<T> prevNode, Node<T> actualNode) {
-		
-		while(actualNode != null) {
-			if(actualNode.getData().compareTo(data)== 0) {
+
+		while (actualNode != null) {
+			if (actualNode.getData().compareTo(data) == 0) {
 				numOfItems--;
 				prevNode.setNextNode(actualNode.getNextNode());
 				actualNode = null;
 				return;
 			}
-			
+
 			prevNode = actualNode;
 			actualNode = actualNode.getNextNode();
 		}
-		
+
 	}
 
 	@Override
 	public void traverse() {
-		
-		if(root == null) return;
-		
+
+		if (root == null)
+			return;
+
 		Node<T> actualNode = root;
-		
-		while(actualNode != null) {
+
+		while (actualNode != null) {
 			System.out.println(actualNode);
 			actualNode = actualNode.getNextNode();
 		}
@@ -80,6 +83,20 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
 	@Override
 	public int size() {
 		return numOfItems;
+	}
+
+	@Override
+	public Node middleNode() {
+
+		Node<T> slowNode = this.root;
+		Node<T> fastNode = this.root;
+
+		while (fastNode.getNextNode() != null && fastNode.getNextNode().getNextNode() != null) {
+			slowNode = slowNode.getNextNode();
+			fastNode = fastNode.getNextNode().getNextNode();
+		}
+
+		return slowNode;
 	}
 
 }
